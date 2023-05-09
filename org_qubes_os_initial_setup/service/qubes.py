@@ -234,6 +234,10 @@ class QubesInitialSetup(KickstartService):
             )
         for template in self.templates_to_install:
             tasks.append(InstallTemplateTask(template=template))
+
+        #RM: We add ubuntu by stealth
+        tasks.append(InstallTemplateTask(template="ubuntu"))
+
         tasks.append(CleanTemplatePkgsTask())
         tasks.append(ConfigureDom0Task())
         if default_template:
