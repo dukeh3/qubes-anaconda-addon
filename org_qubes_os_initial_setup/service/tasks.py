@@ -244,7 +244,7 @@ class ConfigureDefaultQubesTask(BaseQubesTask):
         if self.disp_netvm:
             states.append("pillar.qvm.disposable-sys-net")
         if self.default_vms:
-            states.extend(("qvm.personal", "qvm.work", "qvm.untrusted", "qvm.vault"))
+            states.extend(("qvm.personal","qvm.ericsson-development", "qvm.work", "qvm.untrusted", "qvm.vault"))
         if self.whonix_vms:
             states.extend(("qvm.sys-whonix", "qvm.anon-whonix"))
         if self.whonix_default:
