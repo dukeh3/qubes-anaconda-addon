@@ -86,19 +86,19 @@ class QubesInitialSetup(KickstartService):
         if self.fedora_available:
             self.templates_versions["fedora"] = get_template_version("fedora")
             self.templates_aliases["fedora"] = (
-                "Fedora %s" % self.templates_versions["fedora"]
+                    "Fedora %s" % self.templates_versions["fedora"]
             )
 
         if self.debian_available:
             self.templates_versions["debian"] = get_template_version("debian")
             self.templates_aliases["debian"] = (
-                "Debian %s" % self.templates_versions["debian"]
+                    "Debian %s" % self.templates_versions["debian"]
             )
 
         if self.whonix_available:
             self.templates_versions["whonix"] = get_template_version("whonix-ws")
             self.templates_aliases["whonix"] = (
-                "Whonix %s" % self.templates_versions["whonix"]
+                    "Whonix %s" % self.templates_versions["whonix"]
             )
 
         self.usbvm_available = not started_from_usb()
@@ -209,7 +209,7 @@ class QubesInitialSetup(KickstartService):
         start_usb = self.usbvm and not self.usbvm_with_netvm
         # resolve template version, if kickstart doesn't include it already
         if self.default_template and not any(
-            x.isdigit() for x in self.default_template
+                x.isdigit() for x in self.default_template
         ):
             template_version = get_template_version(self.default_template)
             if template_version is not None:
@@ -235,8 +235,10 @@ class QubesInitialSetup(KickstartService):
         for template in self.templates_to_install:
             tasks.append(InstallTemplateTask(template=template))
 
-        #RM: We add ubuntu by stealth
+        # RM: We add ubuntu, ubuntu-minimal and ubuntu-standard by stealth
         tasks.append(InstallTemplateTask(template="ubuntu"))
+        tasks.append(InstallTemplateTask(template="ubuntu-minimal"))
+        tasks.append(InstallTemplateTask(template="ubuntu-standard"))
 
         tasks.append(CleanTemplatePkgsTask())
         tasks.append(ConfigureDom0Task())
